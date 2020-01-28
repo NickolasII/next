@@ -1,26 +1,53 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+import MainMenu from "./component/Menu/MainMenu";
+import Content from "./component/Pages/Content";
 
 function App() {
+    const useStyles = makeStyles(theme => ({
+        root: {
+            flexGrow: 1,
+        },
+        paper: {
+            padding: theme.spacing(2),
+            margin: 'auto',
+            // maxWidth: 500,
+        },
+        image: {
+            width: 47,
+            height: 'auto',
+        },
+        img: {
+            margin: 'auto',
+            display: 'block',
+            maxWidth: 47,
+            maxHeight: 'auto',
+            width: 47,
+            height: 'auto',
+        },
+    }));
+    const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <Grid container spacing={2}>
+          <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                  <MainMenu />
+              </Paper>
+          </Grid>
+          <Grid item xs={1}>
+              {/*<Paper className={classes.paper}>xs=1</Paper>*/}
+          </Grid>
+          <Grid item xs={10}>
+              <Content />
+          </Grid>
+          <Grid item xs={1}>
+              {/*<Paper className={classes.paper}>xs=1</Paper>*/}
+          </Grid>
+      </Grid>
+);
 }
 
 export default App;
