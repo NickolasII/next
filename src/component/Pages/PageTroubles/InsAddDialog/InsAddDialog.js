@@ -11,17 +11,27 @@ const InsAddDialog=(props)=>{
     const [cat, setCat]=useState();
     const [category, setCategory]=useState();
     const [trname, setTrname]=useState('');
-    function HandleClick() {
-        axios.post('/troubles',{
-            trname: trname,
-            categoryentity_id: category.id
-        })
-            .then()
-            .catch(err=>console.log(err))
-       props.handleClose();
+    const [errCat, setErrCat]=useState({err:false, msg:''});
+    function HandleClickSave() {
+        if (!trname) {
+            let var1=errCat;
+            var1.err=true;
+            var1.msg='Не пустое';
+            setErrCat(var1);
+        } else
+        {
+            axios
+                .post('/troubles',{
+                    trname: trname,
+                    categoryentity_id: category.id
+                })
+                .then()
+                .catch(err=>console.log(err))
+            props.handleClose();
+        }
     }
 
-    function handleChange(event) {
+    function handleChangeCat(event) {
         const val=event.target.value;
         let oCat;
         if (val) {
@@ -49,24 +59,28 @@ const InsAddDialog=(props)=>{
                         Тут будет текст
                     </DialogContentText>
                     <TextField
-                        value={trname}  onChange={TrnameChange}
+                        value={trname}
+                        onChange={TrnameChange}
+                        required={true}
+                        error={errCat.err}
+                        helperText={errCat.msg}
                         placeholder='Наименование неисправности'
                         autoFocus
                         style={{ margin: 8 }}
                         // placeholder="Выбирите категорию оборудования"
                         size={"medium"}
                         margin="normal"
+                        label="Наименование неисправности"
                         InputLabelProps={{
                             shrink: true,
                         }}
                         variant="outlined"
                         id="trname"
-                        label="Наименование неисправности"
                         fullWidth
                     />
                     <TextField
                         value={cat}
-                        onChange={handleChange}
+                        onChange={handleChangeCat}
                         label="Категория оборудования"
                         select
                         style={{ margin: 8 }}
@@ -90,7 +104,7 @@ const InsAddDialog=(props)=>{
                     </TextField>
                 </DialogContent>
                 <DialogActions>
-                    <Button  color="primary" type='submit' onClick={HandleClick}>
+                    <Button  color="primary" /*type='submit'*/ onClick={HandleClickSave}>
                         Сохранить
                     </Button>
                     <Button  color="secondary" onClick={props.handleClose}>
