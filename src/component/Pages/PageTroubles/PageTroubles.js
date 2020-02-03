@@ -71,7 +71,7 @@ const PageTroubles=()=>{
                 
             })
             .catch(err => alert(err));
-    }, [isOpen]);
+    }, []);
 
 
 
@@ -137,7 +137,7 @@ const PageTroubles=()=>{
             <Paper>
                 <Button onClick={handleClickOpen} startIcon={<AddCircleOutlineOutlinedIcon/>} variant='outlined' color='primary'>Добавить неисправности</Button>
                 {/*<Button startIcon={<IndeterminateCheckBoxOutlinedIcon/>} variant='outlined' color='secondary'>Удалить заявку</Button>*/}
-                <InsAddDialog isOpen={isOpen} catList={catList} handleClose={handleClose}/>
+                <InsAddDialog isOpen={isOpen} catList={catList} handleClose={handleClose} />
             </Paper>
             <Paper>
             <TableContainer /*component={Paper}*/>

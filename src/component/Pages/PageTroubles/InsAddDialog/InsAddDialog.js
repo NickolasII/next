@@ -74,6 +74,7 @@ const InsAddDialog=(props)=>{
         setCat('')
         setErrName({err:false, msg:''});
         setErrCat({err:false, msg:''});
+        props.
         props.handleClose();
     }
 
