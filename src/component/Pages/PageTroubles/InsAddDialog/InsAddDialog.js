@@ -9,26 +9,44 @@ import axios from "../../../../axios/axios";
 
 const InsAddDialog=(props)=>{
     const [cat, setCat]=useState();
-    const [category, setCategory]=useState();
+    const [category, setCategory]=useState(-1);
     const [trname, setTrname]=useState('');
+    const [errName, setErrName]=useState({err:false, msg:''});
     const [errCat, setErrCat]=useState({err:false, msg:''});
-    function HandleClickSave() {
+
+    const Validate=()=>{
         if (!trname) {
-            let var1=errCat;
+            let var1=errName;
             var1.err=true;
-            var1.msg='Не пустое';
-            setErrCat(var1);
-        } else
-        {
-            axios
-                .post('/troubles',{
-                    trname: trname,
-                    categoryentity_id: category.id
-                })
-                .then()
-                .catch(err=>console.log(err))
-            props.handleClose();
+            var1.msg='Не может быть пустое';
+            setErrName(var1);
+        } else {
+            setErrName({err:false, msg:''});
         }
+        if (!cat) {
+            let varErr=errCat;
+            varErr.err=true;
+            varErr.msg='Нужно выбрать категорию';
+            setErrCat(varErr);
+        } else {
+            setErrCat({err:false, msg:''});
+        }
+    }
+
+    function HandleClickSave() {
+        Validate();
+        if (errCat.err | errName.err) {
+            return;
+        }
+
+        axios
+            .post('/troubles',{
+                trname: trname,
+                categoryentity_id: category.id
+            })
+            .then()
+            .catch(err=>console.log(err))
+        CloseClick();
     }
 
     function handleChangeCat(event) {
@@ -39,10 +57,10 @@ const InsAddDialog=(props)=>{
                 return  item.catname===val;
             })
             setCategory(oCat[0])
-            setCat(val);
         } else {
             setCategory(-1);
         }
+        setCat(val);
     };
 
 
@@ -50,20 +68,29 @@ const InsAddDialog=(props)=>{
         setTrname(event.target.value)
     };
 
+    function CloseClick() {
+        setTrname('');
+        setCategory(-1);
+        setCat('')
+        setErrName({err:false, msg:''});
+        setErrCat({err:false, msg:''});
+        props.handleClose();
+    }
+
     return(
-        <div >
+        <div>
             <Dialog open={props.isOpen}>
                 <DialogTitle>Заголовок</DialogTitle>
                 <DialogContent >
                     <DialogContentText>
-                        Тут будет текст
+                        {/*Тут будет текст*/}
                     </DialogContentText>
                     <TextField
                         value={trname}
                         onChange={TrnameChange}
                         required={true}
-                        error={errCat.err}
-                        helperText={errCat.msg}
+                        error={errName.err}
+                        helperText={errName.msg}
                         placeholder='Наименование неисправности'
                         autoFocus
                         style={{ margin: 8 }}
@@ -81,6 +108,9 @@ const InsAddDialog=(props)=>{
                     <TextField
                         value={cat}
                         onChange={handleChangeCat}
+                        required={true}
+                        error={errCat.err}
+                        helperText={errCat.msg}
                         label="Категория оборудования"
                         select
                         style={{ margin: 8 }}
@@ -104,10 +134,10 @@ const InsAddDialog=(props)=>{
                     </TextField>
                 </DialogContent>
                 <DialogActions>
-                    <Button  color="primary" /*type='submit'*/ onClick={HandleClickSave}>
+                    <Button  color="primary" type='submit' onClick={HandleClickSave} href={'#'}>
                         Сохранить
                     </Button>
-                    <Button  color="secondary" onClick={props.handleClose}>
+                    <Button  color="secondary" onClick={CloseClick}>
                         Отмена
                     </Button>
                 </DialogActions>
@@ -117,3 +147,4 @@ const InsAddDialog=(props)=>{
 };
 
 export default InsAddDialog;
+

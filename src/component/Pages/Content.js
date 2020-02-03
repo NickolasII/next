@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch} from "react-router-dom";
 import PageMain from "./PageMain";
-import PageEquip from "./PageEquip";
+import PageEquip from "./PageEquip/PageEquip";
 import PageTroubles from "./PageTroubles/PageTroubles";
 
 const Content=()=>{

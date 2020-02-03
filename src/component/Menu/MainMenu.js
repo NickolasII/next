@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import {FormGroup} from "@material-ui/core";
 
 
 const useStyles = makeStyles(theme => ({
@@ -38,9 +39,10 @@ const MainMenu=()=>{
                         <Button variant="contained" color="primary" href="/equipment" className={classes.link}>Оборудование</Button>
                         <Button variant="contained" color="primary" href="/troubles" className={classes.link}>Неисправности</Button>
                     </nav>
+                    <FormGroup>
                     <strong>Отдел</strong>
-                    <br/>
                     <label>Пользователь</label>
+                    </FormGroup>
                 </Toolbar>
             </AppBar>
         </div>

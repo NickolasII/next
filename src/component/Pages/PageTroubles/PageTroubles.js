@@ -57,6 +57,7 @@ const PageTroubles=()=>{
     },[]);
 
     useEffect(() => {
+        console.log('troubles!!!!!!!!!!!!!!!!!!!!!!')
         const res=[];
         axios
             .get('/troubles')
@@ -66,9 +67,12 @@ const PageTroubles=()=>{
                 });
                 setData(res);
                 setInitData(res);
+                console.log(res);
+                
             })
             .catch(err => alert(err));
-    }, []);
+    }, [isOpen]);
+
 
 
     function handleClick(event, row) {
@@ -120,7 +124,8 @@ const PageTroubles=()=>{
                             native: true,
                         }}>
                         <option value="" ></option>
-                        {catList.map(option => (
+                        {catList
+                            .map(option => (
                             <option key={option.id} value={option.catname}>
                                 {option.catname}
                             </option>
@@ -145,7 +150,9 @@ const PageTroubles=()=>{
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map(row => {
+                        {data
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map(row => {
                             const isSelected=row.id===selected.id;
                             return(
                                 <TableRow key={row.id}
@@ -164,7 +171,7 @@ const PageTroubles=()=>{
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[5, 10, 25]} title='эПривет'
+                rowsPerPageOptions={[5, 10, 25]}
                 component="div"
                 count={data.length}
                 rowsPerPage={rowsPerPage}
