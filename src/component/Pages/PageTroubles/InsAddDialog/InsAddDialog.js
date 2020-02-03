@@ -44,8 +44,13 @@ const InsAddDialog=(props)=>{
                 trname: trname,
                 categoryentity_id: category.id
             })
-            .then()
-            .catch(err=>console.log(err))
+            .then(res=>{
+                let d=res.data;
+                d.category=category;
+                console.log(d)
+                props.setData([...props.data, res.data]);
+            })
+            .catch(err=>console.log(err));
         CloseClick();
     }
 
@@ -74,7 +79,6 @@ const InsAddDialog=(props)=>{
         setCat('')
         setErrName({err:false, msg:''});
         setErrCat({err:false, msg:''});
-        props.
         props.handleClose();
     }
 

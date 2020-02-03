@@ -137,7 +137,7 @@ const PageTroubles=()=>{
             <Paper>
                 <Button onClick={handleClickOpen} startIcon={<AddCircleOutlineOutlinedIcon/>} variant='outlined' color='primary'>Добавить неисправности</Button>
                 {/*<Button startIcon={<IndeterminateCheckBoxOutlinedIcon/>} variant='outlined' color='secondary'>Удалить заявку</Button>*/}
-                <InsAddDialog isOpen={isOpen} catList={catList} handleClose={handleClose} />
+                <InsAddDialog  isOpen={isOpen} catList={catList} handleClose={handleClose} setData={setData} data={data}/>
             </Paper>
             <Paper>
             <TableContainer /*component={Paper}*/>
